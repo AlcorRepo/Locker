@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Safety Lockers - Security Solutions for Home & Office</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --dark-bg: #1a252f;
+            --light-bg: #ecf0f1;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Color Theme Selector */
+        .theme-selector {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 2000;
+        }
+
+        .theme-toggle {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.15) rotate(180deg);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+        }
+
+        .theme-panel {
+            position: absolute;
+            bottom: 0;
+            right: 60px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            display: none;
+            min-width: 140px;
+        }
+
+        .theme-panel.active {
+            display: block;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .theme-panel h4 {
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .theme-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .theme-btn {
+            width: 45px;
+            height: 45px;
+            border: 3px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            border-color: #333;
+        }
+
+        .theme-blue { background: linear-gradient(135deg, #1a237e, #283593); }
+        .theme-red { background: linear-gradient(135deg, #c62828, #e74c3c); }
+        .theme-green { background: linear-gradient(135deg, #1b5e20, #27ae60); }
+        .theme-purple { background: linear-gradient(135deg, #6a1b9a, #8e44ad); }
+        .theme-orange { background: linear-gradient(135deg, #e65100, #f39c12); }
+        .theme-teal { background: linear-gradient(135deg, #00695c, #16a085); }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .top-bar {
+            background: var(--dark-bg);
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .top-bar a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section with Carousel */
+        .hero {
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        .hero-slide img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            background: rgba(255,255,255,0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background 0.3s;
+        }
+
+        .slider-nav:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .slider-nav.prev {
+            left: 20px;
+        }
+
+        .slider-nav.next {
+            right: 20px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent-color);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Section Styles with Animation */
+        section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.01);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        section:hover .section-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.5s, box-shadow 0.5s, opacity 0.5s;
+            opacity: 0.7;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        section:hover .product-card {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .product-info p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .product-info ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .product-info ul li {
+            padding: 0.3rem 0;
+            color: #555;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-info ul li {
+            transform: translateX(5px);
+        }
+
+        .product-info ul li::before {
+            content: '✓ ';
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--light-bg);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1), -5px -5px 15px rgba(255,255,255,0.7);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.8;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            transition: left 0.5s ease;
+            z-index: 0;
+        }
+
+        .feature-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        section:hover .feature-card {
+            opacity: 1;
+        }
+
+        .feature-card:hover::before {
+            left: 0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .feature-card:hover h3,
+        .feature-card:hover p {
+            color: white;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #d5dbdb 100%);
+            position: relative;
+            padding: 4rem 5% 6rem;
+        }
+
+        .testimonials-wrapper {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-track {
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent-color);
+            opacity: 0.15;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+
+        .star {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+
+        .testimonial-content {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 2rem auto;
+        }
+
+        .testimonial-author-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .author-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .author-details {
+            text-align: left;
+        }
+
+        .author-name-large {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .author-location-large {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .author-badge {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Testimonial Navigation Arrows */
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .testimonial-nav:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+        }
+
+        .testimonial-nav.prev {
+            left: -25px;
+        }
+
+        .testimonial-nav.next {
+            right: -25px;
+        }
+
+        /* Testimonial Dots Indicator */
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 2rem;
+        }
+
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--accent-color);
+            width: 35px;
+            border-radius: 10px;
+        }
+
+        .testimonial-dot:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 250px;
+            transition: transform 0.4s, box-shadow 0.4s;
+            opacity: 0.85;
+            border: 3px solid var(--secondary-color);
+        }
+
+        section:hover .gallery-item {
+            opacity: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.2) rotate(3deg);
+        }
+
+        /* Video Section */
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            transition: transform 0.4s, box-shadow 0.4s;
+            opacity: 0.9;
+            border: 4px solid var(--accent-color);
+        }
+
+        section:hover .video-container {
+            opacity: 1;
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 500px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact .section-title::after {
+            background: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.4s, background 0.4s;
+        }
+
+        .contact-info:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            color: #333;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--light-bg);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            transform: scale(1.02);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .verification-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .verification-question {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .verification-input {
+            width: 80px;
+            padding: 0.8rem;
+            border: 2px solid var(--secondary-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1), -5px -5px 15px rgba(255,255,255,0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            transition: left 0.5s ease;
+            z-index: 0;
+        }
+
+        .submit-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .submit-btn:hover::before {
+            left: 0;
+        }
+
+        .submit-btn:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 20px var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        footer:hover {
+            background: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: scale(1.3) rotate(15deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .theme-selector {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .products-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                min-width: 90%;
+                margin: 0 5%;
+            }
+
+            .author-avatar-large {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .author-name-large {
+                font-size: 1.1rem;
+            }
+
+            .testimonial-text {
+                font-size: 1rem;
+            }
+
+            .testimonial-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .testimonial-nav.prev {
+                left: -15px;
+            }
+
+            .testimonial-nav.next {
+                right: -15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Color Theme Selector -->
+    <div class="theme-selector">
+        <button class="theme-toggle" onclick="toggleThemePanel()">🎨</button>
+        <div class="theme-panel" id="themePanel">
+            <h4>Choose Theme</h4>
+            <div class="theme-buttons">
+                <button class="theme-btn theme-blue" onclick="changeTheme('blue')" title="Blue Classic"></button>
+                <button class="theme-btn theme-red" onclick="changeTheme('red')" title="Bold Red"></button>
+                <button class="theme-btn theme-green" onclick="changeTheme('green')" title="Nature Green"></button>
+                <button class="theme-btn theme-purple" onclick="changeTheme('purple')" title="Royal Purple"></button>
+                <button class="theme-btn theme-orange" onclick="changeTheme('orange')" title="Vibrant Orange"></button>
+                <button class="theme-btn theme-teal" onclick="changeTheme('teal')" title="Ocean Teal"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <span>📞 Call Us: +91 99945 71155 | +91 99946 71155</span>
+        </div>
+        <nav>
+            <div class="logo">🔒 PREMIUM SAFETY LOCKERS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#video">Video</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active">
+                <img src="./img/hero-1.png" alt="Safety Locker">
+                <div class="hero-content">
+                    <h1>24 Hours Protection</h1>
+                    <p>Premium Safety Lockers for Home, Office & Jewelleries</p>
+                    <a href="#contact" class="cta-button"><span>Get Your Locker Today</span></a>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <img src="./img/hero-2.png" alt="Secure Storage">
+                <div class="hero-content">
+                    <h1>Fire Proof Security</h1>
+                    <p>Custom Made Any Size and Requirement</p>
+                    <a href="#contact" class="cta-button"><span>Request a Quote</span></a>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <img src="./img/hero-3.png" alt="Advanced Locking">
+                <div class="hero-content">
+                    <h1>Advanced Locking System</h1>
+                    <p>3 & 4 Side Locking Mechanism with Digital Security</p>
+                    <a href="#products" class="cta-button"><span>View Products</span></a>
+                </div>
+            </div>
+            <div class="hero-slide">
+                <img src="./img/hero-4.png" alt="Home Security">
+                <div class="hero-content">
+                    <h1>Your Safety, Our Priority</h1>
+                    <p>Free Delivery & Installation | Rust Proof | Can't Break</p>
+                    <a href="#contact" class="cta-button"><span>Contact Us Now</span></a>
+                </div>
+            </div>
+        </div>
+        <button class="slider-nav prev" onclick="changeSlide(-1)">❮</button>
+        <button class="slider-nav next" onclick="changeSlide(1)">❯</button>
+        <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <h2 class="section-title">Our Premium Safety Lockers</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <img src="./img/products-1.jpg" alt="Floor Model Locker" class="product-image">
+                <div class="product-info">
+                    <h3>Floor Model Locker</h3>
+                    <p>Heavy-duty floor standing lockers with maximum security features.</p>
+                    <ul>
+                        <li>3 & 4 side locking mechanism</li>
+                        <li>Fire-proof body construction</li>
+                        <li>Customizable sizes available</li>
+                        <li>Weight: 85-95 kg</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="./img/products-2.jpg" alt="Cupboard Model" class="product-image">
+                <div class="product-info">
+                    <h3>Cupboard Model</h3>
+                    <p>Integrated wardrobe design that doesn't look like a locker.</p>
+                    <ul>
+                        <li>Blends with interior decor</li>
+                        <li>Multiple compartments</li>
+                        <li>Double locking device</li>
+                        <li>Powder coated finish</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="./img/products-3.jpg" alt="Stand Model" class="product-image">
+                <div class="product-info">
+                    <h3>Stand Model</h3>
+                    <p>Compact and portable locker with sturdy stand base.</p>
+                    <ul>
+                        <li>Easy installation</li>
+                        <li>Mechanical & digital locks</li>
+                        <li>Capacity: 53-67 litres</li>
+                        <li>Ideal for home & office</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="./img/products-4.jpg" alt="Wall Model" class="product-image">
+                <div class="product-info">
+                    <h3>Wall Model</h3>
+                    <p>Space-saving wall-mounted lockers with fixing in the wall.</p>
+                    <ul>
+                        <li>Fixed securely to wall</li>
+                        <li>Flush mount design</li>
+                        <li>All hinges inside locker</li>
+                        <li>Discreet appearance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="./img/products-5.jpg" alt="Safety Room Door" class="product-image">
+                <div class="product-info">
+                    <h3>Safety Room Door</h3>
+                    <p>Strong room doors with master locking mechanism for ultimate security.</p>
+                    <ul>
+                        <li>Fire-proof construction</li>
+                        <li>Master locking system</li>
+                        <li>Custom sizes available</li>
+                        <li>Sandwich door design</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="./img/products-6.jpg" alt="Safety Box" class="product-image">
+                <div class="product-info">
+                    <h3>Safety Box</h3>
+                    <p>Compact safety boxes perfect for documents and small valuables.</p>
+                    <ul>
+                        <li>Portable design</li>
+                        <li>4-6 digit numerical lock</li>
+                        <li>Fire resistant</li>
+                        <li>Easy to install</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose Our Safety Lockers</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Free Delivery</h3>
+                <p>We provide free delivery and installation at your doorstep across the region.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Free Installation</h3>
+                <p>Professional installation service included with every purchase.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✏️</div>
+                <h3>Custom Design</h3>
+                <p>Tailored to your specific requirements and available space.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔑</div>
+                <h3>Handmade Long Keys</h3>
+                <p>Unique handmade keys with number lock for added security.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Unbreakable</h3>
+                <p>Heavy-duty construction that cannot be broken or forced open.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3>Fire Proof</h3>
+                <p>Fire-resistant materials protect your valuables from fire damage.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Powder Coated</h3>
+                <p>Rust-proof powder coating ensures long-lasting durability.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Triple Locking</h3>
+                <p>Advanced 3 & 4 side locking mechanism for maximum security.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonials-wrapper">
+            <button class="testimonial-nav prev" onclick="changeTestimonial(-1)">❮</button>
+            <button class="testimonial-nav next" onclick="changeTestimonial(1)">❯</button>
+            
+            <div class="testimonials-track">
+                <div class="testimonials-slider" id="testimonialSlider">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">Heavy locker now we are safe on our holidays. Hand made long keys and also key hole lock. Good service, Very prompt response and delivered secretly to our house. Highly recommended!</p>
+                            </div>
+                            <div class="testimonial-divider"></div>
+                            <div class="testimonial-author-section">
+                                <div class="author-avatar-large">RK</div>
+                                <div class="author-details">
+                                    <div class="author-name-large">Rajesh Kumar</div>
+                                    <div class="author-location-large">📍 Coimbatore</div>
+                                    <span class="author-badge">Verified Customer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">They arranged locker according to the available place. Nice design. All door hinges are inside the locker, nothing is visible outside. More bullet points for locking on all three sides of door. It's fire proof also. Thanks for the supply at right time to our house and suggested for vasthu also.</p>
+                            </div>
+                            <div class="testimonial-divider"></div>
+                            <div class="testimonial-author-section">
+                                <div class="author-avatar-large">PS</div>
+                                <div class="author-details">
+                                    <div class="author-name-large">Priya Sharma</div>
+                                    <div class="author-location-large">📍 Chennai</div>
+                                    <span class="author-badge">Verified Customer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">Excellent quality and professional service! The customization options were perfect for our office needs. The installation team was punctual and efficient. Best safety locker investment we've made.</p>
+                            </div>
+                            <div class="testimonial-divider"></div>
+                            <div class="testimonial-author-section">
+                                <div class="author-avatar-large">SM</div>
+                                <div class="author-details">
+                                    <div class="author-name-large">Suresh Menon</div>
+                                    <div class="author-location-large">📍 Bangalore</div>
+                                    <span class="author-badge">Verified Customer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dot Indicators -->
+            <div class="testimonial-dots">
+                <span class="testimonial-dot active" onclick="goToTestimonial(0)"></span>
+                <span class="testimonial-dot" onclick="goToTestimonial(1)"></span>
+                <span class="testimonial-dot" onclick="goToTestimonial(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">Our Product Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="./img/gallery-1.jpeg" alt="Locker Installation">
+            </div>
+            <div class="gallery-item">
+                <img src="./img/gallery-2.jpeg" alt="Digital Lock">
+            </div>
+            <div class="gallery-item">
+                <img src="./img/gallery-3.jpeg" alt="Wall Safe">
+            </div>
+            <div class="gallery-item">
+                <img src="./img/gallery-4.jpeg" alt="Floor Safe">
+            </div>
+            <div class="gallery-item">
+                <img src="./img/gallery-5.jpeg" alt="Office Locker">
+            </div>
+            <div class="gallery-item">
+                <img src="./img/gallery-6.jpeg" alt="Safe Box">
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video">
+        <h2 class="section-title">See Our Products in Action</h2>
+        <div class="video-container">
+<!--
+            <iframe src="https://www.youtube.com/embed/GHSTgw_GnN8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+-->
+            <iframe width="560" height="315" 
+				src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+				title="YouTube video player" 
+				frameborder="0" 
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+				allowfullscreen>
+			</iframe>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>📍 Visit Us</h3>
+                <p>Ramakrishnapuram, Ganapathy</p>
+                <p>Coimbatore - 641 006</p>
+                <p>Tamil Nadu, India</p>
+                
+                <h3 style="margin-top: 2rem;">📞 Call Us</h3>
+                <p>+91 99945 71155</p>
+                <p>+91 99946 71155</p>
+                <p>+91 94426 12464</p>
+                
+                <h3 style="margin-top: 2rem;">📧 Email Us</h3>
+                <p>lockstersafes@gmail.com</p>
+                
+                <h3 style="margin-top: 2rem;">⏰ Working Hours</h3>
+                <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+                <p>Sunday: By Appointment</p>
+            </div>
+
+            <div class="contact-form">
+                <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">Request a Quote</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile *</label>
+                        <input type="tel" id="mobile" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="message"></textarea>
+                    </div>
+                    <div class="verification-group">
+                        <span class="verification-question" id="verificationQuestion"></span>
+                        <input type="number" id="verificationAnswer" class="verification-input" required placeholder="?">
+                    </div>
+                    <button type="submit" class="submit-btn"><span>Send Message</span></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+<!--
+            <a href="https://facebook.com" target="_blank" title="Facebook">📘</a>
+            <a href="https://twitter.com" target="_blank" title="Twitter">🐦</a>
+            <a href="https://instagram.com" target="_blank" title="Instagram">📷</a>
+            <a href="https://linkedin.com" target="_blank" title="LinkedIn">💼</a>
+            <a href="https://youtube.com" target="_blank" title="YouTube">📺</a>
+            <a href="https://wa.me/919994571155" target="_blank" title="WhatsApp">💬</a>
+-->
+            <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+			<a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+			<a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+			<a href="https://linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+			<a href="https://youtube.com" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+			<a href="https://wa.me/919994571155" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p style="margin-bottom: 1rem;">
+            <strong>Your Safety is Our Utmost Concern</strong>
+        </p>
+        <p>© 2024 Premium Safety Lockers. All Rights Reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">
+            Custom made lockers for any size and requirement | Fire Proof | Rust Proof | Can't Break
+        </p>
+    </footer>
+
+    <script>
+        // Color Themes
+        const themes = {
+            blue: {
+                primary: '#1a237e',
+                secondary: '#283593',
+                accent: '#ffd700',
+                dark: '#0d1642'
+            },
+            red: {
+                primary: '#c62828',
+                secondary: '#e74c3c',
+                accent: '#f39c12',
+                dark: '#8b0000'
+            },
+            green: {
+                primary: '#1b5e20',
+                secondary: '#27ae60',
+                accent: '#f1c40f',
+                dark: '#0d3d10'
+            },
+            purple: {
+                primary: '#6a1b9a',
+                secondary: '#8e44ad',
+                accent: '#e67e22',
+                dark: '#4a148c'
+            },
+            orange: {
+                primary: '#e65100',
+                secondary: '#f39c12',
+                accent: '#3498db',
+                dark: '#bf360c'
+            },
+            teal: {
+                primary: '#00695c',
+                secondary: '#16a085',
+                accent: '#e74c3c',
+                dark: '#004d40'
+            }
+        };
+
+        function changeTheme(themeName) {
+            const theme = themes[themeName];
+            document.documentElement.style.setProperty('--primary-color', theme.primary);
+            document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+            document.documentElement.style.setProperty('--accent-color', theme.accent);
+            document.documentElement.style.setProperty('--dark-bg', theme.dark);
+            
+            // Close theme panel after selection
+            document.getElementById('themePanel').classList.remove('active');
+        }
+
+        function toggleThemePanel() {
+            const panel = document.getElementById('themePanel');
+            panel.classList.toggle('active');
+        }
+
+        // Close theme panel when clicking outside
+        document.addEventListener('click', function(event) {
+            const themeSelector = document.querySelector('.theme-selector');
+            const panel = document.getElementById('themePanel');
+            
+            if (!themeSelector.contains(event.target) && panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            }
+        });
+
+        // Hero Carousel - Automatic circular rotation
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot');
+        let autoSlideInterval;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Circular rotation
+            if (n >= slides.length) currentSlideIndex = 0;
+            if (n < 0) currentSlideIndex = slides.length - 1;
+            
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function changeSlide(n) {
+            currentSlideIndex += n;
+            showSlide(currentSlideIndex);
+            resetAutoSlide();
+        }
+
+        function currentSlide(n) {
+            currentSlideIndex = n;
+            showSlide(currentSlideIndex);
+            resetAutoSlide();
+        }
+
+        function autoSlide() {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(autoSlide, 4000);
+        }
+
+        // Start hero auto-slide with circular rotation
+        autoSlideInterval = setInterval(autoSlide, 4000);
+
+        // Testimonials Carousel - One card at a time with dots
+        let testimonialIndex = 0;
+        const testimonialSlider = document.getElementById('testimonialSlider');
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        let testimonialInterval;
+
+        function updateTestimonialDisplay() {
+            // Move slider
+            testimonialSlider.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+            
+            // Update dots
+            testimonialDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === testimonialIndex);
+            });
+        }
+
+        function changeTestimonial(direction) {
+            clearInterval(testimonialInterval);
+            
+            testimonialIndex += direction;
+            
+            // Circular navigation
+            if (testimonialIndex < 0) {
+                testimonialIndex = testimonialSlides.length - 1;
+            } else if (testimonialIndex >= testimonialSlides.length) {
+                testimonialIndex = 0;
+            }
+            
+            updateTestimonialDisplay();
+            testimonialInterval = setInterval(autoSlideTestimonial, 5000);
+        }
+
+        function goToTestimonial(index) {
+            clearInterval(testimonialInterval);
+            testimonialIndex = index;
+            updateTestimonialDisplay();
+            testimonialInterval = setInterval(autoSlideTestimonial, 5000);
+        }
+
+        function autoSlideTestimonial() {
+            testimonialIndex++;
+            if (testimonialIndex >= testimonialSlides.length) {
+                testimonialIndex = 0;
+            }
+            updateTestimonialDisplay();
+        }
+
+        // Start auto-slide
+        testimonialInterval = setInterval(autoSlideTestimonial, 5000);
+
+        // Section animations
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const title = entry.target.querySelector('.section-title');
+                    if (title) {
+                        title.style.opacity = '1';
+                        title.style.transform = 'translateY(0)';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        // Form verification
+        let num1, num2, correctAnswer;
+
+        function generateVerification() {
+            num1 = Math.floor(Math.random() * 10) + 1;
+            num2 = Math.floor(Math.random() * 10) + 1;
+            correctAnswer = num1 + num2;
+            document.getElementById('verificationQuestion').textContent = `What is ${num1} + ${num2}?`;
+        }
+
+        generateVerification();
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userAnswer = parseInt(document.getElementById('verificationAnswer').value);
+            
+            if (userAnswer !== correctAnswer) {
+                alert('Incorrect answer! Please try again.');
+                generateVerification();
+                document.getElementById('verificationAnswer').value = '';
+                return;
+            }
+            
+            alert('Thank you! Your message has been sent successfully. We will contact you soon.');
+            this.reset();
+            generateVerification();
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
