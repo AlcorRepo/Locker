@@ -1393,11 +1393,8 @@
     <section id="video">
         <h2 class="section-title">See Our Products in Action</h2>
         <div class="video-container">
-<!--
-            <iframe src="https://www.youtube.com/embed/GHSTgw_GnN8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
--->
             <iframe width="560" height="315" 
-				src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+				src="https://www.youtube.com/embed/GHSTgw_GnN8" 
 				title="YouTube video player" 
 				frameborder="0" 
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -1694,6 +1691,36 @@
                 document.getElementById('verificationAnswer').value = '';
                 return;
             }
+
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            const address = document.getElementById('address').value;
+            const message = document.getElementById('message').value;
+            
+            // Create email content
+            const subject = 'New Quote Request from ' + name;
+            const body = `
+Name: ${name}
+Email: ${email}
+Mobile: ${mobile}
+Address: ${address}
+
+Message:
+${message}
+
+---
+This is an automated message from Premium Safety Lockers website contact form.
+            `.trim();
+            
+            // Encode for URL
+            const mailtoLink = `mailto:lockstersafes@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open default email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
             
             alert('Thank you! Your message has been sent successfully. We will contact you soon.');
             this.reset();
